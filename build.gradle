@@ -8,10 +8,12 @@ version = '1.0.0'
 
 repositories {
     mavenCentral()
+    maven { url "https://maven.hytale.com/release" }
+    maven { url "https://maven.hytale.com/pre-release" }
 }
 
 dependencies {
-    compileOnly(files("./HytaleServer.jar"))
+    compileOnly "com.hypixel.hytale:Server:${hytale_build}"
     implementation("com.google.code.gson:gson:2.10.1")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
 }
