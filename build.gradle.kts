@@ -1,10 +1,10 @@
 plugins {
-    id 'java'
-    id 'com.gradleup.shadow' version '8.3.6'
+    java
+    id("com.gradleup.shadow") version "8.3.6"
 }
 
-group = 'com.nexify'
-version = '1.0.0'
+group = "com.nexify"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -21,12 +21,12 @@ java {
     targetCompatibility = JavaVersion.VERSION_21
 }
 
-shadowJar {
-    archiveBaseName.set('NexifyHytale')
-    archiveClassifier.set('')
-    relocate 'com.google.gson', 'com.nexify.hytale.libs.gson'
+tasks.shadowJar {
+    archiveBaseName.set("NexifyHytale")
+    archiveClassifier.set("")
+    relocate("com.google.gson", "com.nexify.hytale.libs.gson")
 }
 
-test {
+tasks.test {
     useJUnitPlatform()
 }
