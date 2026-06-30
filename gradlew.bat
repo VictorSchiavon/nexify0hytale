@@ -31,6 +31,7 @@ set APP_HOME=%DIRNAME%
 
 for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
+set JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-25.0.3.9-hotspot
 set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
 
 if defined JAVA_HOME goto findJavaFromJavaHome
