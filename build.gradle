@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.nexify'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly(files("./HytaleServer.jar"))
+    implementation("com.google.code.gson:gson:2.10.1")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+shadowJar {
+    archiveBaseName.set('NexifyHytale')
+    archiveClassifier.set('')
+    // Relocate gson so it doesn't clash with the server's own copy, if any.
+    relocate 'com.google.gson', 'com.nexify.hytale.libs.gson'
+}
+
+test {
+    useJUnitPlatform()
+}

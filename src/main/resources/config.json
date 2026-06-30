@@ -1,0 +1,5 @@
+{
+  "apiBaseUrl": "https://api.nexify.gg",
+  "apiToken": "PASTE_YOUR_STORE_TOKEN_HERE",
+  "pollIntervalSeconds": 10
+}
