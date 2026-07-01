@@ -29,15 +29,16 @@ public class PendingDelivery {
         public List<Command> commands;
     }
 
-    /** Cada comando vem como objeto {id, command, argument} da API */
+    /** Cada comando vem como objeto {id, status_payment, command, command_value} da API */
     public static class Command {
         public String id;
+        public String status_payment;
         public String command;
-        public String argument;
+        public String command_value;
 
         public String toCommandString() {
-            if (argument != null && !argument.isBlank()) {
-                return command + " " + argument;
+            if (command_value != null && !command_value.isBlank()) {
+                return command + " " + command_value;
             }
             return command;
         }
