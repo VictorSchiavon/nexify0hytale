@@ -38,11 +38,11 @@ public class PendingDelivery {
 
         public String toCommandString() {
             if ("fivemarket:addItem".equals(command)) {
-                // "ItemName:Quantity" → "give {player} ItemName Quantity"
+                // "ItemName:Quantity" → "give {player} ItemName --quantity=Quantity"
                 String[] parts = (command_value != null ? command_value : "").split(":");
                 String item = parts.length > 0 ? parts[0] : "";
                 String qty  = parts.length > 1 ? parts[1] : "1";
-                return "give {player} " + item + " " + qty;
+                return "give {player} " + item + " --quantity=" + qty;
             }
             if (command_value != null && !command_value.isBlank()) {
                 return command + " " + command_value;
