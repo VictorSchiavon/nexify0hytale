@@ -1,23 +1,61 @@
 package com.nexify.hytale;
 
+import java.util.List;
+
 /**
- * Mirrors one entry returned by GET /store/deliveries/pending/:api_token
- *
- * ASSUMPTION: field names below are inferred from the command log format
- * shared by the user ("Executando comando [cmd_xxx]: fivemarket:addItem | Valor: water:23")
- * and from the Minecraft plugin contract. Confirm against a real response
- * from https://api.nexify.gg/store/test/reset/:api_token before relying on this.
+ * Formato real confirmado via API:
+ * {
+ *   "hasPending": true,
+ *   "deliveryId": "uuid",
+ *   "data": {
+ *     "buyer": "NickDoJogador",
+ *     "variable": {
+ *       "commands": ["give NickDoJogador sword 1", "say NickDoJogador recebeu!"]
+ *     }
+ *   }
+ * }
  */
 public class PendingDelivery {
+    public boolean hasPending;
     public String deliveryId;
-    public String player;
-    public String command;
-    public String value;
+    public Data data;
 
-    /** e.g. "fivemarket:addItem" -> "addItem" */
-    public String commandName() {
-        if (command == null) return "";
-        int idx = command.indexOf(':');
-        return idx >= 0 ? command.substring(idx + 1) : command;
+    public static class Data {
+        public String buyer;
+        public Variable variable;
+    }
+
+    public static class Variable {
+        public List<Command> commands;
+    }
+
+    /** Cada comando vem como objeto {id, command, argument} da API */
+    public static class Command {
+        public String id;
+        public String command;
+        public String argument;
+
+        public String toCommandString() {
+            if (argument != null && !argument.isBlank()) {
+                return command + " " + argument;
+            }
+            return command;
+        }
+    }
+
+    public List<String> getCommands() {
+        if (data == null || data.variable == null || data.variable.commands == null)
+            return List.of();
+        List<String> result = new java.util.ArrayList<>();
+        for (Command cmd : data.variable.commands) {
+            if (cmd != null && cmd.command != null) {
+                result.add(cmd.toCommandString());
+            }
+        }
+        return result;
+    }
+
+    public String getBuyer() {
+        return data != null ? data.buyer : null;
     }
 }
